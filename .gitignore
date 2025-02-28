@@ -44,3 +44,37 @@ htmlcov/
 
 # Archivos de Git
 .DS_Store
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# Archivos de volúmenes de Docker (para evitar persistencia de datos locales)
+volumes/
+data/
+
+# Base de datos de PostgreSQL en Docker
+pgdata/
+
+# Archivos de caché adicionales
+*.log
+*.out
+*.pid
+*.lock
+
+# __pycache__ adicional en cualquier directorio
+**/__pycache__/
+
+# Archivos relacionados con Python Bytecode
+*.pyo
+*.pyd
+
+# Archivos de entorno adicionales
+.envrc
+*.local.env
+
+# Archivos temporales de desarrollo
+*.bak
+*.swp
+*.swo
+*~

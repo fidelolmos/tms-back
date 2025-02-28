@@ -78,9 +78,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'tms_db',
-        'USER': 'tms_user',
-        'PASSWORD': 'tms_password',
-        'HOST': 'localhost',
+        'USER': 'admin',
+        'PASSWORD': 'admin123',
+        'HOST': 'postgres',
         'PORT': 5432,
     }
 }
