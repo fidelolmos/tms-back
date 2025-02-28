@@ -1,80 +1,72 @@
-# Entornos virtuales
+# ==============================
+# 🚀 Django .gitignore Mejorado 🚀
+# ==============================
+
+# 📌 Entornos virtuales
 venv/
 
-# Archivos compilados de Python
+# 📌 Archivos compilados de Python
 __pycache__/
 *.py[cod]
 *.so
 
-# Configuración del entorno
+# 📌 Configuración del entorno
 .env
 *.env
+.envrc
+*.local.env
 
-# Archivos de bases de datos locales
+# 📌 Archivos de bases de datos locales
 db.sqlite3
 db.sqlite3-journal
 
-# Archivos de migraciones de Django
+# 📌 Archivos de migraciones de Django (permitiendo rastreo de archivos .py)
 **/migrations/*.pyc
-**/migrations/*.py
-!**/migrations/__init__.py
+!**/migrations/*.py  # Se permite el rastreo de migraciones
 
-# Archivos estáticos y de medios
+# 📌 Archivos de caché y temporales de Django
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.db
+**/__pycache__/
+**/*.cache
+
+# 📌 Archivos estáticos y de medios
 /static/
 /media/
 
-# Logs
-*.log
-
-# Archivos de IDEs y editores de código
+# 📌 Archivos de IDEs y editores de código
 .vscode/
 .idea/
 *.swp
 
-# Dependencias
+# 📌 Dependencias de paquetes
 *.egg-info/
 .eggs/
 
-# Caché de Django
-**/*.cache
-
-# Archivos de cobertura de pruebas
+# 📌 Archivos de cobertura de pruebas
 .coverage
 htmlcov/
 
-# Archivos de Git
+# 📌 Archivos de Git y del sistema
 .DS_Store
 
-# Docker
+# 📌 Docker
 docker-compose.override.yml
 .dockerignore
 
-# Archivos de volúmenes de Docker (para evitar persistencia de datos locales)
+# 📌 Archivos de volúmenes de Docker (para evitar persistencia de datos locales)
 volumes/
 data/
 
-# Base de datos de PostgreSQL en Docker
-pgdata/
+# 📌 Base de datos de PostgreSQL en Docker (si usas volúmenes, puedes eliminar esta línea)
+postgres_data/
 
-# Archivos de caché adicionales
-*.log
-*.out
-*.pid
-*.lock
-
-# __pycache__ adicional en cualquier directorio
-**/__pycache__/
-
-# Archivos relacionados con Python Bytecode
-*.pyo
-*.pyd
-
-# Archivos de entorno adicionales
-.envrc
-*.local.env
-
-# Archivos temporales de desarrollo
+# 📌 Archivos temporales de desarrollo
 *.bak
-*.swp
 *.swo
 *~
+
