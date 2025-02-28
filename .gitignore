@@ -1,0 +1,46 @@
+# Entornos virtuales
+venv/
+
+# Archivos compilados de Python
+__pycache__/
+*.py[cod]
+*.so
+
+# Configuración del entorno
+.env
+*.env
+
+# Archivos de bases de datos locales
+db.sqlite3
+db.sqlite3-journal
+
+# Archivos de migraciones de Django
+**/migrations/*.pyc
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# Archivos estáticos y de medios
+/static/
+/media/
+
+# Logs
+*.log
+
+# Archivos de IDEs y editores de código
+.vscode/
+.idea/
+*.swp
+
+# Dependencias
+*.egg-info/
+.eggs/
+
+# Caché de Django
+**/*.cache
+
+# Archivos de cobertura de pruebas
+.coverage
+htmlcov/
+
+# Archivos de Git
+.DS_Store
