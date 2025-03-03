@@ -21,6 +21,8 @@ services:
       - postgres
     environment:
       DATABASE_URL: postgres://admin:admin123@postgres:5432/tms_db
+    volumes:
+      - .:/app
     ports:
       - "8000:8000"
     networks:
