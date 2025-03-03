@@ -3,6 +3,7 @@ from django.conf import settings
 from geopy.geocoders import Nominatim
 import requests
 from django.contrib.auth import get_user_model
+from geopy.exc import GeocoderUnavailable, GeocoderTimedOut
 
 
 User = get_user_model()
@@ -25,16 +26,21 @@ class Direction(models.Model):
         super().save(*args, **kwargs)
     
     def obtain_geolocation(self):
-        geolocator = Nominatim(user_agent="django_geocoder")
-        address_query = ", ".join(filter(None, [self.street, self.city, self.state, self.zip_code, self.country]))
-        if address_query:
-            location = geolocator.geocode(address_query)
-            if location:
-                self.lat = location.latitude
-                self.lon = location.longitude
-
-    def __str__(self):
-        return self.name or self.street
+        """Obtiene la latitud y longitud usando Nominatim"""
+        try:
+            geolocator = Nominatim(user_agent="django_geocoder", timeout=10)  # 🔹 Aumentamos el timeout
+            address_query = ", ".join(filter(None, [self.street, self.city, self.state, self.zip_code, self.country]))
+            if address_query:
+                location = geolocator.geocode(address_query)
+                if location:
+                    self.lat = location.latitude
+                    self.lon = location.longitude
+                else:
+                    print("⚠️ No se encontró la dirección:", address_query)
+        except (GeocoderUnavailable, GeocoderTimedOut):
+            print("🚨 Nominatim no está disponible o tardó demasiado en responder")
+            self.lat = 0.0
+            self.lon = 0.0  # 🔹 Evita que falle el guardado en la BD
 
 # Modelo de Orden de Transporte
 class Order(models.Model):

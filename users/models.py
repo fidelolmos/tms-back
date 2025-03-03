@@ -2,17 +2,22 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.db import models
 from rest_framework_simplejwt.tokens import RefreshToken
 
+class UserRoles(models.TextChoices):
+    ADMIN = 'admin', 'Administrador'
+    DRIVER = 'driver', 'Conductor'
+
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, username, password=None, **extra_fields):
+    def create_user(self, email, username, password=None, role=UserRoles.DRIVER, **extra_fields):
         if not email:
             raise ValueError('El email es obligatorio')
         email = self.normalize_email(email)
-        user = self.model(email=email, username=username, **extra_fields)
+        user = self.model(email=email, username=username, role=role, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
     def create_superuser(self, email, username, password=None, **extra_fields):
+        extra_fields.setdefault('role', UserRoles.ADMIN)
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         return self.create_user(email, username, password, **extra_fields)
@@ -20,6 +25,11 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=150, unique=True)
+    role = models.CharField(
+        max_length=10,
+        choices=UserRoles.choices,
+        default=UserRoles.DRIVER
+    )
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
@@ -30,7 +40,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['username']
 
     def __str__(self):
-        return self.email
+        return f"{self.email} ({self.get_role_display()})"
     
     def tokens(self):
         refresh = RefreshToken.for_user(self)
